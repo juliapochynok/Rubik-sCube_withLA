@@ -56,43 +56,69 @@ def set_val(matrix, val, coordinates):
     return matrix2
 
 
+def make_matrix_with_one(matrix, line):
+    if line % 2 == 0:
+        col = 0
+    else:
+        col = 2
+    res = set_val(matrix, 1, [[0, col]])
+    return res
+
+
+def make_matrix_with_two_ones(matrix, line):
+    res = matrix
+    if line % 2 == 0:
+        col = 0
+    else:
+        col = 2
+    for i in range(3):
+        if i == col:
+            continue
+        res = set_val(res, 1, [[0, i]])
+    return res
 
 
 if __name__ == "__main__":
-    matrix1 = [[2, 2, 2],
-               [2, 2, 3],
-               [2, 2, 4]]
+    matrix1 = [[2, 3, 5],
+               [2, 6, 7],
+               [1, 2, 9]]
 
-    matrix2 = [[1, 1, 0],
+    matrix2 = [[0, 0, 0],
                [0, 0, 0],
-               [0, 0, 0]]
-    mat = matrix_multiplication(matrix1, matrix2)
+               [0, 0,0]]
+    # mat = matrix_multiplication(matrix1, matrix2)
+    mat1 = make_matrix_with_one(matrix2, 2)
+    mat2 = make_matrix_with_two_ones(matrix2, 2)
 
-    matrix3 = [[1, 2, 3],
-               [1, 2, 3],
-               [1, 2, 3]]
+    # matrix3 = [[1, 2, 3],
+    #            [1, 2, 3],
+    #            [1, 2, 3]]
+    #
+    # for i in range(len(matrix3)):
+    #     for j in range(len(matrix3)):
+    #         print(" ", matrix3[i][j], end=" ")
+    #     print()
+    #
+    #
+    #
+    # matrix3 = transpose(matrix3)
+    # print()
+    # print()
+    #
+    # for i in range(len(matrix3)):
+    #     for j in range(len(matrix3)):
+    #         print(" ", matrix3[i][j], end=" ")
+    #     print()
+    #
+    # matrix3 = transpose(matrix3)
+    # print()
+    # print()
 
-    for i in range(len(matrix3)):
-        for j in range(len(matrix3)):
-            print(" ", matrix3[i][j], end=" ")
+    for i in range(len(mat1)):
+        for j in range(len(mat1)):
+            print(" ", mat1[i][j], end=" ")
         print()
-
-
-
-    matrix3 = transpose(matrix3)
-    print()
-    print()
-
-    for i in range(len(matrix3)):
-        for j in range(len(matrix3)):
-            print(" ", matrix3[i][j], end=" ")
-        print()
-
-    matrix3 = transpose(matrix3)
-    print()
-    print()
-
-    for i in range(len(matrix3)):
-        for j in range(len(matrix3)):
-            print(" ", matrix3[i][j], end=" ")
+    for i in range(len(mat2)):
+        for j in range(len(mat2)):
+            print(" ", mat2[i][j], end=" ")
         print()
