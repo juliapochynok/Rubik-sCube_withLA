@@ -1,10 +1,3 @@
-# ----------------------------------------------------------------------
-# Matplotlib Rubik's cube simulator
-# Written by Jake Vanderplas
-# Adapted from cube code written by David Hogg
-#   https://github.com/davidwhogg/MagicCube
-
-
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import widgets
@@ -38,9 +31,9 @@ class Cube:
     """Magic Cube Representation"""
     # define some attribues
     default_plastic_color = 'black'
-    default_face_colors = ["w", "#ffcf00",
-                           "#00008f", "#009f0f",
-                           "#ff6f00", "#cf0000",
+    default_face_colors = ["blue", "green",
+                           "orange", "red",
+                           "#BDF5FF", "yellow",
                            "gray", "none"]
     base_face = np.array([[1, 1, 1],
                           [1, -1, 1],
@@ -275,14 +268,13 @@ class InteractiveCube(plt.Axes):
                          size=10)
 
     def _initialize_widgets(self):
-        pass
-        # self._ax_reset = self.figure.add_axes([0.75, 0.05, 0.2, 0.075])
-        # self._btn_reset = widgets.Button(self._ax_reset, 'Reset View')
-        # self._btn_reset.on_clicked(self._reset_view)
-        #
-        # self._ax_solve = self.figure.add_axes([0.55, 0.05, 0.2, 0.075])
-        # self._btn_solve = widgets.Button(self._ax_solve, 'Solve Cube')
-        # self._btn_solve.on_clicked(self._solve_cube)
+        self._ax_reset = self.figure.add_axes([0.75, 0.05, 0.2, 0.075])
+        self._btn_reset = widgets.Button(self._ax_reset, 'Reset View')
+        self._btn_reset.on_clicked(self._reset_view)
+
+        self._ax_solve = self.figure.add_axes([0.55, 0.05, 0.2, 0.075])
+        self._btn_solve = widgets.Button(self._ax_solve, 'Solve Cube')
+        self._btn_solve.on_clicked(self._solve_cube)
 
     def _project(self, pts):
         return project_points(pts, self._current_rot, self._view, [0, 1, 0])
@@ -451,10 +443,14 @@ if __name__ == '__main__':
 
     c = Cube(N)
 
-    c.draw_interactive()
-    plt.show()
-
-    c.rotate_face('R')
-
+    # do a 3-corner swap
+    # c.rotate_face('U')
+    # c.rotate_face('L')
+    # c.rotate_face('D')
+    # c.rotate_face('R')
+    # c.rotate_face('F')
+    # c.rotate_face('B', -1)
+    # c.rotate_face('U', -1)
+    # c.rotate_face('L', -1)
     c.draw_interactive()
     plt.show()

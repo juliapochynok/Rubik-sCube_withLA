@@ -1,3 +1,5 @@
+import random
+
 from Face import Face
 from mul_add import *
 
@@ -7,7 +9,6 @@ MATRIX_0 = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 class Cube:
 
     def __init__(self, n):
-
         self.relation_representation = {"F": [[17, 19, 22, 24], [9, 3, 46, 32], [1, 27, 14, 48],
                                               [35, 33, 40, 38],
                                               [6, 25, 16, 43], [11, 8, 41, 30], [18, 21, 23, 20], [7, 28, 42, 13]],
@@ -19,7 +20,8 @@ class Cube:
 
                                         "U": [[1, 3, 6, 8], [14, 38, 22, 30], [40, 32, 16, 24],
                                               [46, 48, 41, 43], [35, 27, 11, 19], [9, 33, 17, 25],
-                                              [2, 5, 7, 4], [10, 34, 26, 18]],
+                                              [2, 5, 7, 4], [47, 45, 42, 44], [39, 31, 23, 15],
+                                              [12, 36, 28, 20], [37, 29, 21, 13], [34, 26, 18, 10]],
 
                                         "D": [[41, 43, 48, 46], [42, 45, 47, 44], [14, 22, 30, 38],
                                               [15, 23, 31, 39], [16, 24, 32, 40]],
@@ -31,23 +33,15 @@ class Cube:
 
         self.cube = {'U': Face(n, "U", 1), 'L': Face(n, "L", 9), 'F': Face(n, "F", 17),
                      'R': Face(n, "R", 25), 'B': Face(n, "B", 33), 'D': Face(n, "D", 41)}
-
-        self.right_left_rotation = ["F", "R", "B", "L"]
-        self.up_down_rotation = ["F", "U", "B", "D"]
-
-        self.neighbour = {"U": ["B", "F", "L", "R"], "L": ["U", "D", "B", "F"], "F": ["U", "D", "L", "R"],
-                          "R": ["U", "D", "F", "B"], "B": ["D", "U", "L", "R"], "D": ["F", "B", "L", "R"]}
-
-        self.neighbour2 = {"U": ["B", "F", "L", "R"], "L": ["U", "D", "B", "F"], "F": ["U", "D", "L", "R"],
-                           "R": ["U", "D", "F", "B"], "B": ["D", "U", "L", "R"], "D": ["F", "B", "L", "R"]}
-
         self.n = n
-        self.sides_relations = {"U": [["B", 0, -1], ["R", 0, -1], ["F", 0, -1],  ["L", 0, -1]],
-                                "L": [["F", 2, -1], ["D", 2, -1], ["B", 3, 1], ["U", 2, -1]],
-                                "F": [["U", 1, 1], ["R", 2, -1], ["D", 0, -1],  ["L", 3, 1]],
-                                "R": [["U", 3, 1], ["B", 2, -1], ["D", 3, 1],  ["F", 3, 1]],
-                                "B": [["U", 0, -1], ["L", 2, -1], ["D", 1, 1],  ["R", 3, 1]],
-                                "D": [["F", 1, 1], ["R", 1, 1], ["B", 1, 1],  ["L", 1, 1]]}
+        self.sides_relations = {"U": [["B", 0], ["R", 0, -1], ["F", 0, -1],  ["L", 0, -1]],
+                                "L": [["F", 2], ["D", 2, -1], ["B", 3, 1], ["U", 2, -1]],
+                                "F": [["U", 1], ["R", 2, -1], ["D", 0, -1],  ["L", 3, 1]],
+                                "R": [["U", 3], ["B", 2, -1], ["D", 3, 1],  ["F", 3, 1]],
+                                "B": [["U", 0], ["L", 2, -1], ["D", 1, 1],  ["R", 3, 1]],
+                                "D": [["F", 1], ["R", 1, 1], ["B", 1, 1],  ["L", 1, 1]]}
+
+        self.commands =["L", "l", "R", "r", "F", "f", "B", "b", "U", "u", "D", "d"]
 
     def rotate(self, letter):
         if ord(letter) < 97:
@@ -109,6 +103,15 @@ class Cube:
 
             j -= 1
 
+    def shuffle(self, s=10):
+        # random.seed(13)
+        # random.seed(103) 1->27
+        # random.seed(75) corner
+        # random.seed(42) corner
+        random.seed(s)
+        for i in range(5):
+            self.rotate(random.choice(self.commands))
+
     def find_vector_to_add(self, side):
         transp = False
         letter = side[0]
@@ -157,7 +160,7 @@ class Cube:
 
 if __name__ == "__main__":
     cube1 = Cube(3)
-    # cube1.mix2()
+    cube1.mix2()
     # cube1.show()
     # cube1.rotate("B", 2, 1)
     cube1.rotate("d")

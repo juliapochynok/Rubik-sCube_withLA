@@ -74,6 +74,22 @@ class Face:
             new_c[y] = abs(coords[x] - (self.n - 1)) % self.n
         return new_c
 
+    def __ne__(self, other):
+        for row in range(len(self.face)):
+            for col in range(len(self.face[row])):
+                if self.face[row][col] != other.face[row][col]:
+                    if isinstance(other.face[row][col], str) or isinstance(self.face[row][col], str):
+                        continue
+                    return True
+        return False
+
+    def __eq__(self, other):
+        for row in range(len(self.face)):
+            for col in range(len(self.face[row])):
+                if self.face[row][col] != other.face[row][col]:
+                    return False
+        return True
+
 
 if __name__ == "__main__":
     f = Face(3, "R", [33, 21, 11, 32, 16, 13, 5, 3])
