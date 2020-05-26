@@ -16,7 +16,7 @@ class Solution:
         self.result_steps = []
 
     def shuffle(self, seed):
-        self.shuffle_steps = c.shuffle(seed)
+        self.shuffle_steps = self.cube.shuffle(seed)
 
     def solve_cube(self):
         self.result_steps = solve_corners(self.cube, self.prime_side)
@@ -26,6 +26,11 @@ class Solution:
         fifth_step(self.cube, self.result_steps)
         sixth_step(self.cube, self.result_steps)
         solve_down_edges(self.cube, self.result_steps)
+
+    def shuffle_user(self, steps):
+        self.shuffle_steps = steps
+        for el in steps:
+            self.cube.rotate(el)
 
 
 if __name__ == "__main__":

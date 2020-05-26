@@ -1,8 +1,12 @@
+import time
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import widgets
-from projection import Quaternion, project_points
 
+from interface import start_cube
+from projection import Quaternion, project_points
+# from solution import s
 """
 Sticker representation
 ----------------------
@@ -27,7 +31,7 @@ canonical position.
 """
 
 
-class Cube:
+class Cube_vis:
     """Magic Cube Representation"""
     # define some attribues
     default_plastic_color = 'black'
@@ -80,6 +84,7 @@ class Cube:
             self.face_colors = face_colors
 
         self._move_list = []
+        self.move_list = []
         self._initialize_arrays()
 
     def _initialize_arrays(self):
@@ -191,11 +196,11 @@ class InteractiveCube(plt.Axes):
                  fig=None, rect=[0, 0.16, 1, 0.84],
                  **kwargs):
         if cube is None:
-            self.cube = Cube(3)
-        elif isinstance(cube, Cube):
+            self.cube = Cube_vis(3)
+        elif isinstance(cube, Cube_vis):
             self.cube = cube
         else:
-            self.cube = Cube(cube)
+            self.cube = Cube_vis(cube)
 
         self._view = view
         self._start_rot = Quaternion.from_v_theta((1, -1, 0),
@@ -261,11 +266,18 @@ class InteractiveCube(plt.Axes):
         self._initialize_widgets()
 
         # write some instructions
-        self.figure.text(0.05, 0.05,
-                         "Mouse/arrow keys adjust view\n"
-                         "U/D/L/R/B/F keys turn faces\n"
-                         "(hold shift for counter-clockwise)",
-                         size=10)
+        # self.figure.text(0.05, 0.05, self.print_moves(),
+        #                  size=10)
+
+    # def print_moves(self):
+    #     s = "["
+    #     if len(self.cube.move_list) < 10:
+    #         return str(self.cube.move_list)
+    #     else:
+    #         for i in range(len(self.cube.move_list)//10):
+    #             s += str(self.cube.move_list[i*10:(i+1)*10]) + "\n"
+    #         s += "]"
+    #     return s
 
     def _initialize_widgets(self):
         self._ax_reset = self.figure.add_axes([0.75, 0.05, 0.2, 0.075])
@@ -335,10 +347,9 @@ class InteractiveCube(plt.Axes):
         self._draw_cube()
 
     def _solve_cube(self, *args):
-        move_list = self.cube._move_list[:]
-        for (face, n, layer) in move_list[::-1]:
-            self.rotate_face(face, -n, layer, steps=3)
-        self.cube._move_list = []
+        move_list = self.cube.move_list
+        shuffle_vis(self, move_list)
+        self.cube.move_list = []
 
     def _key_press(self, event):
         """Handler for key press events"""
@@ -433,6 +444,16 @@ class InteractiveCube(plt.Axes):
                 self.figure.canvas.draw()
 
 
+def shuffle_vis(c, lst):
+    for move in lst:
+        if move.isupper():
+            c.rotate_face(move)
+            time.sleep(1)
+        else:
+            c.rotate_face(move.upper(), -1)
+            time.sleep(1)
+
+
 if __name__ == '__main__':
     import sys
 
@@ -440,17 +461,19 @@ if __name__ == '__main__':
         N = int(sys.argv[1])
     except:
         N = 3
+    steps = start_cube()
 
-    c = Cube(N)
+    c = Cube_vis(N)
 
-    # do a 3-corner swap
-    # c.rotate_face('U')
-    # c.rotate_face('L')
-    # c.rotate_face('D')
-    # c.rotate_face('R')
-    # c.rotate_face('F')
-    # c.rotate_face('B', -1)
-    # c.rotate_face('U', -1)
-    # c.rotate_face('L', -1)
+    shuffle_moves = steps[0]
+    result_moves = steps[1]
+    shuffle_vis(c, shuffle_moves)
+    c.move_list = result_moves
     c.draw_interactive()
     plt.show()
+    # shuffle_moves = s.shuffle_steps
+    # result_moves = s.result_steps
+    # shuffle(c, shuffle_moves)
+    # c.move_list = result_moves
+    # c.draw_interactive()
+    # plt.show()
