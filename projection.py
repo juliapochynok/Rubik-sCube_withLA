@@ -1,3 +1,11 @@
+# IMPORTANT!!!!
+# Code in this file is written by a David W. Hogg (NYU) and Jacob Vanderplas (UW)
+# and is used in over project only for displaying the results of actual project
+# we do not own any of these code and all credits are to its authors.
+# you can find his whole version here https://github.com/davidwhogg/MagicCube
+
+
+
 import numpy as np
 
 class Quaternion:
