@@ -46,7 +46,7 @@ def start_cube():
 
 
     print("Steps to solve a cube:")
-    print(simplify_user(result_steps))
+    print(result_steps)
 
     return s.shuffle_steps, result_steps
 

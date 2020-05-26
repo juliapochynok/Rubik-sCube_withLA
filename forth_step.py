@@ -31,8 +31,10 @@ def one_round(cube, result_steps):
         elif method == 4:
             method_1_to_2(cube, corner, result_steps)
             cube.rotate("d")
+            result_steps.append("d")
             method_1_to_2(cube, corner, result_steps)
             cube.rotate("D")
+            result_steps.append("D")
             method_1_to_2(cube, corner, result_steps)
 
 

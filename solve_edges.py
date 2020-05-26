@@ -36,6 +36,7 @@ def solve_edges(cube, prime_side, result_steps):
                 if j < 5:
                     middle_edge += 1
                 cube.rotate("d")
+                result_steps.append("d")
                 j -= 1
 
 

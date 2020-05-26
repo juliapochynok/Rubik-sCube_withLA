@@ -35,10 +35,12 @@ class Solution:
 
 if __name__ == "__main__":
     c = Cube(3)
-    f = open("seed_bad.txt", "w")
+    # f = open("seed_bad.txt", "w")
     # c.shuffle(19)
     # c.shuffle(74)
-    # s = Solution(c)
+    s = Solution(c)
+    s.shuffle(9)
+    s.solve_cube()
     # s.solve_corners()
     # s.solve_edges()
     # s.solve_second_layer()
@@ -46,21 +48,21 @@ if __name__ == "__main__":
     # s.fifth_step()
     # s.sixth_step()
     # s.solve_down_edges()
-    for i in range(10):
-
-        s = Solution(c)
-        s.shuffle(i)
-        s.solve_cube()
-        for key in s.cube.cube:
-            if s.cube.cube[key] != s.cube.ideal_cube[key]:
-                f.write(str(i))
-                f.write("\n")
-                f.flush()
-                break
-        f.write("shuffle_steps: " + str(s.shuffle_steps))
-        f.write("\n")
-        f.write("result_steps: " + str(s.result_steps))
-        f.write("\n")
-        f.flush()
-    # c.show()
-    f.close()
+    # for i in range(10):
+    #
+    #     s = Solution(c)
+    #     s.shuffle(i)
+    #     s.solve_cube()
+    #     for key in s.cube.cube:
+    #         if s.cube.cube[key] != s.cube.ideal_cube[key]:
+    #             f.write(str(i))
+    #             f.write("\n")
+    #             f.flush()
+    #             break
+        # f.write("shuffle_steps: " + str(s.shuffle_steps))
+        # f.write("\n")
+        # f.write("result_steps: " + str(s.result_steps))
+        # f.write("\n")
+        # f.flush()
+    c.show()
+    # f.close()

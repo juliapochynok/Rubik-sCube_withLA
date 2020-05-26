@@ -38,6 +38,7 @@ def solve_corners(cube, prime_side):
                 if j < 5:
                     turn_u += 1
                 cube.rotate("D")
+                res_steps.append("D")
                 j -= 1
 
     return res_steps
@@ -84,6 +85,7 @@ def corner_method4(cube, i, res_lst):
 def corner_method5(cube, i, res_lst):
     corner_method1(cube, i, res_lst)
     cube.rotate("D")
+    res_lst.append("D")
     corner_method1(cube, i, res_lst)
 
 
