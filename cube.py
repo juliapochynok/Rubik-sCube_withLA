@@ -24,7 +24,7 @@ class Cube:
                                               [12, 36, 28, 20], [37, 29, 21, 13], [34, 26, 18, 10]],
 
                                         "D": [[41, 43, 46, 48], [16, 24, 40, 32], [22, 30, 14, 38],
-                                              [15, 23, 31, 39], [42, 45, 47, 44]],
+                                              [42, 44, 45, 47], [23, 15, 31, 39]],
                                         "R": [[25, 27, 32, 30], [26, 29, 31, 28], [3, 38, 43, 19],
                                               [5, 36, 45, 21], [8, 33, 48, 24]]}
 
@@ -105,13 +105,14 @@ class Cube:
             j -= 1
 
     def shuffle(self, s=10):
-        # random.seed(13)
-        # random.seed(103) 1->27
-        # random.seed(75) corner
-        # random.seed(42) corner
+        shuffle_steps = []
         random.seed(s)
-        for i in range(5):
-            self.rotate(random.choice(self.commands))
+        for i in range(8):
+            com = random.choice(self.commands)
+            self.rotate(com)
+            shuffle_steps.append(com)
+        return shuffle_steps
+
 
     def find_vector_to_add(self, side):
         transp = False

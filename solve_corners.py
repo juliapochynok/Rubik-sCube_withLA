@@ -3,6 +3,7 @@ from solve import find_cubie
 
 
 def solve_corners(cube, prime_side):
+    res_steps = []
     relations = cube.relation_representation[prime_side][0]
     for i in range(len(relations)):
         turn_u = 0
@@ -16,22 +17,22 @@ def solve_corners(cube, prime_side):
             else:
                 method = corner_method(cube, pos_tup, i, prime_side, turn_u)
             if method[0] == 1:
-                corner_method1(cube, i)
+                corner_method1(cube, i,res_steps)
                 break
             elif method[0] == 2:
-                corner_method2(cube, i)
+                corner_method2(cube, i,res_steps)
                 break
             elif method[0] == 3:
-                corner_method3(cube, i)
+                corner_method3(cube, i,res_steps)
                 break
             elif method[0] == 4:
-                corner_method4(cube, i, turn_u)
+                corner_method4(cube, i, res_steps)
                 break
             elif method[0] == 5:
-                corner_method5(cube, i, turn_u)
+                corner_method5(cube, i, res_steps)
                 break
             elif isinstance(method[0], int):
-                corner_method6(cube, i, method[0])
+                corner_method6(cube, i, method[0], res_steps)
                 break
             else:
                 if j < 5:
@@ -39,34 +40,37 @@ def solve_corners(cube, prime_side):
                 cube.rotate("D")
                 j -= 1
 
-    return cube
+    return res_steps
 
 
-def corner_method1(cube, i):
+def corner_method1(cube, i, res_lst):
     method1_steps = [["l", "d", "L"], ["b", "d", "B"], ["f", "d", "F"], ["r", "d", "R"]]
     steps = method1_steps[i]
     for move in steps:
         cube.rotate(move)
+        res_lst.append(move)
 
 
-def corner_method2(cube, i):
+def corner_method2(cube, i,res_lst):
     method2_steps = [["d", "l", "D", "L"], ["d", "b", "D", "B"],
                      ["d", "f", "D", "F"], ["d", "r", "D", "R"]]
     steps = method2_steps[i]
     for move in steps:
         cube.rotate(move)
+        res_lst.append(move)
 
 
-def corner_method3(cube, i):
+def corner_method3(cube, i, res_lst):
     method3_steps = [["l", "D", "L", "D", "D"], ["b", "D", "B", "D", "D"],
                      ["f", "D", "F", "D", "D"], ["r", "D", "R", "D", "D"]]
     steps = method3_steps[i]
     for move in steps:
         cube.rotate(move)
-    corner_method1(cube, i)
+        res_lst.append(move)
+    corner_method1(cube, i, res_lst)
 
 
-def corner_method4(cube, i, turn_u):
+def corner_method4(cube, i, res_lst):
     method4_steps = [["B", "D", "b", "D", "D", "l", "D", "L"],
                      ["R", "D", "r", "D", "D", "b", "D", "B"],
                      ["L", "D", "l", "D", "D", "f", "D", "F"],
@@ -74,17 +78,17 @@ def corner_method4(cube, i, turn_u):
     steps = method4_steps[i]
     for move in steps:
         cube.rotate(move)
+        res_lst.append(move)
 
 
-def corner_method5(cube, i, turn_u):
-    corner_method1(cube, i)
+def corner_method5(cube, i, res_lst):
+    corner_method1(cube, i, res_lst)
     cube.rotate("D")
-    corner_method1(cube, i)
+    corner_method1(cube, i, res_lst)
 
 
-def corner_method6(cube, i, place):
+def corner_method6(cube, i, place, res_lst):
     place = place/10
-    places_4_5 = [35, 9, 27, 33, 11, 17, 19, 25, 1, 3, 6, 8]
     method6_steps = {35: [[corner_method4], # 1
                           ["B", "D", "b", "D", "D", corner_method2], # 3
                           ["B", "D", "b", corner_method2], # 6
@@ -149,11 +153,12 @@ def corner_method6(cube, i, place):
     steps = method[i]
     for move in steps:
         if callable(move):
-            move(cube, i)
+            move(cube, i, res_lst)
         elif move is None:
             continue
         else:
             cube.rotate(move)
+            res_lst.append(move)
 
 
 def corner_method(cube, pos_tup, i, prime_side, turn_u):

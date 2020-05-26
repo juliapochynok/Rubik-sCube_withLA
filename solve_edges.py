@@ -2,7 +2,7 @@ from cube import Cube
 from solve import find_cubie
 
 
-def solve_edges(cube, prime_side):
+def solve_edges(cube, prime_side, result_steps):
     relations = cube.relation_representation[prime_side][6]
     for i in range(len(relations)):
         j = 8
@@ -16,22 +16,22 @@ def solve_edges(cube, prime_side):
             else:
                 method = edge_method(cube, pos_tup, i, middle_edge, prime_side)
             if method[0] == 1:
-                edge_method1(cube, i)
+                edge_method1(cube, i, result_steps)
                 break
             elif method[0] == 2:
-                edge_method2(cube, i)
+                edge_method2(cube, i, result_steps)
                 break
             elif method[0] == 3:
-                edge_method3(cube, i, method[1])
+                edge_method3(cube, i, method[1], result_steps)
                 break
             elif method[0] == 4:
-                edge_method4(cube, i, method[1])
+                edge_method4(cube, i, method[1], result_steps)
                 break
             elif method[0] == 5:
-                edge_method5(cube, i)
+                edge_method5(cube, i, result_steps)
                 break
             elif isinstance(method[0], int):
-                edge_method6(cube, i, method[0])
+                edge_method6(cube, i, method[0], result_steps)
             else:
                 if j < 5:
                     middle_edge += 1
@@ -65,7 +65,7 @@ def edge_method(cube, pos_tup, i, middle_edge, prime_side):
         j += 1
 
 
-def edge_method1(cube, i):
+def edge_method1(cube, i, result_steps):
     # method1_steps = [["L", "r", "b", "b", "l", "R"],
     #                  ["F", "b", "l", "l", "f", "B"],
     #                  ["B", "f", "r", "r", "F", "b"],
@@ -77,9 +77,10 @@ def edge_method1(cube, i):
     steps = method1_steps[i]
     for move in steps:
         cube.rotate(move)
+        result_steps.append(move)
 
 
-def edge_method2(cube, i):
+def edge_method2(cube, i, result_steps):
     # method2_steps = [["b", "L", "r", "B", "l", "R"],
     #                  ["l", "F", "b", "L", "f", "B"],
     #                  ["r", "B", "f", "R", "F", "b"],
@@ -91,9 +92,10 @@ def edge_method2(cube, i):
     steps = method2_steps[i]
     for move in steps:
         cube.rotate(move)
+        result_steps.append(move)
 
 
-def edge_method3(cube, i, middle_edge):
+def edge_method3(cube, i, middle_edge, result_steps):
     method3_steps = [["U", "d", "R", "u", "D", "b"],
                      ["U", "d", "F", "u", "D", "r"],
                      ["U", "d", "L", "u", "D", "f"],
@@ -101,16 +103,19 @@ def edge_method3(cube, i, middle_edge):
 
     for j in range(middle_edge):
         cube.rotate("U")
+        result_steps.append("U")
 
     steps = method3_steps[(i + middle_edge) % 4]
     for move in steps:
         cube.rotate(move)
+        result_steps.append(move)
 
     for j in range(middle_edge):
         cube.rotate("u")
+        result_steps.append("u")
 
 
-def edge_method4(cube, i, middle_edge):
+def edge_method4(cube, i, middle_edge, result_steps):
     # method4_steps = [["U", "d", "b", "u", "D", "u", "D", "R"],
     #                  ["U", "d", "l", "u", "D", "u", "D", "B"],
     #                  ["U", "d", "r", "u", "D", "u", "D", "F"],
@@ -119,23 +124,27 @@ def edge_method4(cube, i, middle_edge):
                      ["U", "d", "f", "u", "D", "u", "D", "B", "U", "d"],
                      ["U", "d", "l", "u", "D", "u", "D", "R", "U", "d"],
                      ["U", "d", "b", "u", "D", "u", "D", "F", "U", "d"]]
+
     for j in range(middle_edge):
         cube.rotate("U")
+        result_steps.append("U")
 
     steps = method4_steps[(i + middle_edge) % 4]
     for move in steps:
         cube.rotate(move)
+        result_steps.append(move)
 
     for j in range(middle_edge):
         cube.rotate("u")
+        result_steps.append("u")
 
 
-def edge_method5(cube, i):
-    edge_method1(cube, i)
-    edge_method2(cube, i)
+def edge_method5(cube, i, result_steps):
+    edge_method1(cube, i, result_steps)
+    edge_method2(cube, i, result_steps)
 
 
-def edge_method6(cube, i, place):
+def edge_method6(cube, i, place, result_steps):
     place = place / 10
     method6_steps = {34: [[edge_method5],
                           ["L", "r", "b", "l", "R", edge_method1],
@@ -176,8 +185,9 @@ def edge_method6(cube, i, place):
     steps = method[i]
     for move in steps:
         if callable(move):
-            move(cube, i)
+            move(cube, i, result_steps)
         elif move is None:
             continue
         else:
             cube.rotate(move)
+            result_steps.append(move)

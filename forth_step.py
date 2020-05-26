@@ -4,13 +4,13 @@ from solve import find_cubie
 #                                               [15, 23, 31, 39], [42, 45, 47, 44]]
 
 
-def solve_bottom_corners(cube):
-    one_round(cube)
+def solve_bottom_corners(cube,result_steps):
+    one_round(cube, result_steps)
     if not check_fourth_step(cube):
-        solve_bottom_corners(cube)
+        solve_bottom_corners(cube, result_steps)
 
 
-def one_round(cube):
+def one_round(cube, result_steps):
     methods = [[1, 2, 3, 4], [3, 1, 4, 2], [2, 4, 1, 3], [4, 3, 2, 1]]
     relations = cube.relation_representation["D"]
     for corner in range(len(relations[0])):
@@ -25,15 +25,15 @@ def one_round(cube):
         if method == 1:
             continue
         elif method == 2:
-            method_1_to_2(cube, corner)
+            method_1_to_2(cube, corner, result_steps)
         elif method == 3:
-            method_1_to_3(cube, corner)
+            method_1_to_3(cube, corner, result_steps)
         elif method == 4:
-            method_1_to_2(cube, corner)
+            method_1_to_2(cube, corner, result_steps)
             cube.rotate("d")
-            method_1_to_2(cube, corner)
+            method_1_to_2(cube, corner, result_steps)
             cube.rotate("D")
-            method_1_to_2(cube, corner)
+            method_1_to_2(cube, corner, result_steps)
 
 
 def check_fourth_step(cube):
@@ -56,7 +56,7 @@ def check_corner(cube, corner, i):
     return False
 
 
-def method_1_to_2(cube, place):
+def method_1_to_2(cube, place, result_steps):
     method_1_to_2_steps = [["r", "d", "R", "F", "D", "f", "r", "D", "R", "D", "D"],
                            ["b", "d", "B", "R", "D", "r", "b", "D", "B", "D", "D"],
                            ["f", "d", "F", "L", "D", "l", "f", "D", "F", "D", "D"],
@@ -64,10 +64,13 @@ def method_1_to_2(cube, place):
     steps = method_1_to_2_steps[place]
     for move in steps:
         cube.rotate(move)
+        result_steps.append(move)
 
 
-def method_1_to_3(cube, place):
+def method_1_to_3(cube, place, result_steps):
     cube.rotate("D")
-    method_1_to_2(cube, place)
+    result_steps.append("D")
+    method_1_to_2(cube, place, result_steps)
     cube.rotate("d")
+    result_steps.append("d")
 
