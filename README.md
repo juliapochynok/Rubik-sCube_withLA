@@ -4,15 +4,13 @@
 The cube has 43,252,003,274,489,856,000 (43 quintillions) possible positions, and only one is the correct one. 
 As in any period of time cube can be in any of these positions, moreover, there is only a certain amount of positions one can move to in one step, the main problem, and the main difficulty of this puzzle is to transfer from a given position to the correct one. 
 
-
-IMAGE1
-
+![](https://github.com/sophiakravchuk/Rubik-sCube_withLA/blob/master/images/LA1.png?raw=true)
+<div style="text-align:center"><img src="https://github.com/sophiakravchuk/Rubik-sCube_withLA/blob/master/images/LA1.png?raw=true" /></div>
 
 The main goal of our project was to make a program that finds moves to solve a  Rubik’s Cube from certain state.
 
 ## Notation
-IMAGE 2
-
+![](https://github.com/sophiakravchuk/Rubik-sCube_withLA/blob/master/images/LA2.png?raw=true)
 
 This form of notation is used to represent the cube in our project.
 Cube 3x3x3 has 6 faces, each of which in real life is marked by colour. As our project is a python script and not AI for us it is more convenient to use numbers as unique indicators of the cell of the face, than colours. 
@@ -26,17 +24,14 @@ Each face is represented as a 3x3 matrix. Inside the matrix in the middle cell t
 "B" - bottom
 In the picture above one can see the appearance of the cube in this representation in solved form. When the cube is shuffled, certain numbers will not be placed in their original positions, but the middle of the matrix always remains unchanged and indicates the face of the cube.
 
-
-
-IMAGE 3 4
-
-
+![](https://github.com/sophiakravchuk/Rubik-sCube_withLA/blob/master/images/LA3.png?raw=true)
+![](https://github.com/sophiakravchuk/Rubik-sCube_withLA/blob/master/images/la4.png?raw=true)
 
 In order for a person to be able to use the result of our program, we use the following notation:
 Instead of  X or Y one needs to substitute one of the six letters that represent the face of the cube.
- - X - turn a face X 90° clockwise. ( Ex: one can see “R” turn on the right illustration on the previous page or “D” rotation on the right one here respectively)
+ - X - turn a face X 90° clockwise. ( Ex: one can see “R” turn on the right illustration in the upper row of pictures or “D” rotation on the right one in lower row)
 
- - x - turn a face X 90° counterclockwise (Ex: One can see “f” rotation illustrated here on the left picture)
+ - x - turn a face X 90° counterclockwise (Ex: One can see “f” rotation illustrated in lower row on the left picture)
  - X*Y - sequence X, Y  must be rotated in such order.
 
 
@@ -69,26 +64,23 @@ Matrix addition - we use this method to combine two matrices earlier made by mat
 
 Matrix transposition - we use the transposition method for matrices to reorganize the position of the cells of the side when rotating one of the sides because during one rotation they change their position.
 
-
-
-IMAGE 10
+![](https://github.com/sophiakravchuk/Rubik-sCube_withLA/blob/master/images/LA10.png?raw=true)
 
 ## Usage Example
 
-
-GIFS
+![](https://github.com/sophiakravchuk/Rubik-sCube_withLA/blob/master/images/ezgif.com-video-to-gif%20(2).gif?raw=true)
+![](https://github.com/sophiakravchuk/Rubik-sCube_withLA/blob/master/images/ezgif.com-video-to-gif.gif?raw=true)
 
 Our progam solves 88% entirely and 12% - almost entirely.
 
-## Run Dependencies/Usage
-To run the project you will need to download this repository and run this command in command line. Example:
-
-
-
-GIFS 
+## Run Dependencies
+To run the project you will need to download this repository and run command in command line. Example:
+![](https://github.com/sophiakravchuk/Rubik-sCube_withLA/blob/master/images/ezgif.com-video-to-gif%20(1).gif?raw=true)
 
 ## Visualization
-The visualization for better understanding of our project is ///////////////////////////////////////////////////////
+For better understanding of our project we took visualization of the Rubik's Cube written by David W. Hogg (NYU) and Jacob Vanderplas (UW). So we do not own any of the code for vizualization and all credits for it are to its authors.
+You can find his whole version here https://github.com/davidwhogg/MagicCube
 
-## Devlopers Team
+
+## Team
 Sophia Kravchuk, Julia Pochynok, Sophia Haletska
